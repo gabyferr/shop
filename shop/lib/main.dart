@@ -14,13 +14,15 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-       return ChangeNotifierProvider(
+    return ChangeNotifierProvider(
       create: (_) => ProductList(),
       child: MaterialApp(
         title: 'Flutter Demo',
         theme: ThemeData(
           primarySwatch: Colors.blue,
-          snackBarTheme: const SnackBarThemeData(backgroundColor: Colors.blue,),
+          snackBarTheme: const SnackBarThemeData(
+            backgroundColor: Colors.blue,
+          ),
           fontFamily: 'Lato',
           useMaterial3: true,
         ),
@@ -33,4 +35,3 @@ class MyApp extends StatelessWidget {
     );
   }
 }
-
