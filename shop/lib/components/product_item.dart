@@ -32,7 +32,7 @@ class ProductItem extends StatelessWidget {
             children: [
               Expanded(
                 child: Text(
-                  product.title,
+                  product.name,
                   style: const TextStyle(fontSize: 12),
                   textAlign: TextAlign.center,
                   maxLines: 2,

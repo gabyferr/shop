@@ -18,7 +18,7 @@ class ProductDetailPage extends StatelessWidget {
           child: Padding(
             padding: const EdgeInsets.only(right: 50),
             child: Text(
-              product.title,
+              product.name,
               textAlign: TextAlign.center,
               style: const TextStyle(color: Colors.white),
             ),
