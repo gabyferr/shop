@@ -18,11 +18,12 @@ class MyApp extends StatelessWidget {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(
-          create: (_) => Cart(),
+          create: (_) => ProductList(),
         ),
         ChangeNotifierProvider(
-          create: (_) => ProductList(),
-        )
+          create: (_) => Cart(),
+        ),
+
       ],
       child: MaterialApp(
         title: 'Flutter Demo',
@@ -33,6 +34,9 @@ class MyApp extends StatelessWidget {
           ),
           fontFamily: 'Lato',
           useMaterial3: true,
+          iconTheme: const IconThemeData(
+            color: Colors.white,
+          )
         ),
         home: const ProductsOverviewPage(),
         routes: {
