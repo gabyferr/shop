@@ -24,21 +24,21 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(
           create: (_) => Cart(),
         ),
-
       ],
       child: MaterialApp(
         title: 'Flutter Demo',
         theme: ThemeData(
-          primarySwatch: Colors.blue,
-          snackBarTheme: const SnackBarThemeData(
-            backgroundColor: Colors.blue,
-          ),
-          fontFamily: 'Lato',
-          useMaterial3: true,
-          iconTheme: const IconThemeData(
-            color: Colors.white,
-          )
-        ),
+            primarySwatch: Colors.blue,
+            chipTheme: const ChipThemeData(
+                backgroundColor: Colors.white, elevation: 18.0),
+            snackBarTheme: const SnackBarThemeData(
+              backgroundColor: Colors.blue,
+            ),
+            fontFamily: 'Lato',
+            useMaterial3: true,
+            iconTheme: const IconThemeData(
+              color: Colors.white,
+            )),
         home: const ProductsOverviewPage(),
         routes: {
           AppRoutes.productDetail: (context) => const ProductDetailPage(),
