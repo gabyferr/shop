@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 
-class Badgee extends StatelessWidget {
+class BadgeComp extends StatelessWidget {
   final Widget child;
   final String value;
   final Color? color;
 
-  const Badgee({
+  const BadgeComp({
     super.key,
     required this.child,
     required this.value,
@@ -34,10 +34,7 @@ class Badgee extends StatelessWidget {
             child: Text(
               value,
               textAlign: TextAlign.center,
-              style: const TextStyle(
-                fontSize: 10,
-                color: Colors.white
-              ),
+              style: const TextStyle(fontSize: 10, color: Colors.white),
             ),
           ),
         ),

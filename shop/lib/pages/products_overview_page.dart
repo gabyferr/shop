@@ -56,20 +56,18 @@ class _ProductsOverviewPageState extends State<ProductsOverviewPage> {
               });
             },
           ),
-          NotificationListener(
-            child: Consumer<Cart>(
-              child: IconButton(
-                onPressed: () {
-                  Navigator.of(context).pushNamed(AppRoutes.cart);
-                },
-                icon: const Icon(Icons.shopping_cart),
-              ),
-              builder: (ctx, cart, child) => Badgee(
-                value: cart.itemsCount.toString(),
-                child: child!,
-              ),
+          Consumer<Cart>(
+            child: IconButton(
+              onPressed: () {
+                Navigator.of(context).pushNamed(AppRoutes.cart);
+              },
+              icon: const Icon(Icons.shopping_cart),
             ),
-          )
+            builder: (ctx, cart, child) => BadgeComp(
+              value: cart.itemsCount.toString(),
+              child: child!,
+            ),
+          ),
         ],
       ),
       body: ProductGrid(_showFavoriteOnly),

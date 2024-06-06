@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shop/model/cart.dart';
 import 'package:shop/model/product.dart';
+
 import 'package:shop/utils/app_routes.dart';
 
 class ProductItem extends StatelessWidget {
@@ -27,17 +28,13 @@ class ProductItem extends StatelessWidget {
               color: Colors.red,
             ),
           ),
-          title: Row(
-            children: [
-              Expanded(
-                child: Text(
-                  product.name,
-                  style: const TextStyle(fontSize: 12),
-                  textAlign: TextAlign.center,
-                  maxLines: 2,
-                ),
-              ),
-            ],
+          title: Expanded(
+            child: Text(
+              product.name,
+              style: const TextStyle(fontSize: 12),
+              textAlign: TextAlign.center,
+              maxLines: 2,
+            ),
           ),
           trailing: IconButton(
             onPressed: () {
