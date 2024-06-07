@@ -9,6 +9,14 @@ class ProductsFormPages extends StatefulWidget {
 
 class _ProductsFormPagesState extends State<ProductsFormPages> {
   final _priceFocus = FocusNode();
+  final _descriptionFocus = FocusNode();
+
+  @override
+  void dispose() {
+    super.dispose();
+    _priceFocus.dispose();
+    _descriptionFocus.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -24,7 +32,7 @@ class _ProductsFormPagesState extends State<ProductsFormPages> {
       ),
       body: Padding(
         padding: const EdgeInsets.all(15.0),
-        child:Form(
+        child: Form(
           child: ListView(
             children: [
               TextFormField(
@@ -41,6 +49,19 @@ class _ProductsFormPagesState extends State<ProductsFormPages> {
                 keyboardType: const TextInputType.numberWithOptions(
                   decimal: true,
                 ),
+                onFieldSubmitted: (_) {
+                  FocusScope.of(context).requestFocus(_descriptionFocus);
+                },
+              ),
+              TextFormField(
+                decoration: const InputDecoration(labelText: 'Descrição'),
+                textInputAction: TextInputAction.next,
+                focusNode: _descriptionFocus,
+                keyboardType: TextInputType.multiline,
+                maxLines: 3,
+                // onFieldSubmitted: (_) {
+                //   FocusScope.of(context).requestFocus(_descriptionFocus);
+                // },
               ),
             ],
           ),
@@ -49,5 +70,3 @@ class _ProductsFormPagesState extends State<ProductsFormPages> {
     );
   }
 }
-
-
