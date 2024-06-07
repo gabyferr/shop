@@ -20,6 +20,20 @@ class _ProductsFormPagesState extends State<ProductsFormPages> {
           ),
         ),
       ),
+      body: Padding(
+        padding: const EdgeInsets.all(15.0),
+        child: Form(
+            child: ListView(
+          children: const [
+            TextField(
+              decoration: InputDecoration(
+                labelText: 'Nome',
+              ),
+              textInputAction: TextInputAction.next,
+            )
+          ],
+        )),
+      ),
     );
   }
 }
