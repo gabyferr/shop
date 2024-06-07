@@ -49,7 +49,7 @@ class CartPage extends StatelessWidget {
                       ),
                     ),
                     label: Text(
-                      'R\$${cart.totalAmount}',
+                      'R\$${cart.totalAmount.toStringAsFixed(2)}',
                       style: const TextStyle(
                         color: Colors.white,
                       ),
