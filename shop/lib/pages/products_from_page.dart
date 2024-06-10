@@ -1,7 +1,9 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:shop/model/product.dart';
+import 'package:shop/model/product_list.dart';
 
 class ProductsFormPages extends StatefulWidget {
   const ProductsFormPages({super.key});
@@ -57,19 +59,9 @@ class _ProductsFormPagesState extends State<ProductsFormPages> {
 
     _formKey.currentState?.save();
 
-    final newProduct = Product(
-      id: Random().nextDouble().toString(),
-      name: _formData['name'] as String,
-      description: _formData['description'] as String,
-      price: _formData['price'] as double,
-      imageUrl: _formData['imageUrl'] as String,
-    );
-
-    print(newProduct.id);
-    print(newProduct.name);
-    print(newProduct.description);
-    print(newProduct.price);
-    print(newProduct.imageUrl);
+    Provider.of<ProductList>(context, listen: false)
+        .addProductFormData(_formData);
+    Navigator.of(context).pop();
   }
 
   @override
@@ -172,14 +164,14 @@ class _ProductsFormPagesState extends State<ProductsFormPages> {
                       onFieldSubmitted: (_) => _submitForm(),
                       onSaved: (imageUrl) =>
                           _formData['imageUrl'] = imageUrl ?? '',
-                      validator: (_imageUrl) {
-                        final imageUrl = _imageUrl ?? '';
+                      // validator: (_imageUrl) {
+                      //   final imageUrl = _imageUrl ?? '';
 
-                        if (!isValidImageUrl(imageUrl)) {
-                          return 'Informe uma Url válida!';
-                        }
-                        return null;
-                      },
+                      //   if (!isValidImageUrl(imageUrl)) {
+                      //     return 'Informe uma Url válida!';
+                      //   }
+                      //   return null;
+                      // },
                     ),
                   ),
                   Container(
