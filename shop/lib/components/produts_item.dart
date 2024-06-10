@@ -15,7 +15,7 @@ class ProductsItem extends StatelessWidget {
         backgroundImage: NetworkImage(products.imageUrl),
       ),
       title: Text(products.name),
-      trailing: Container(
+      trailing: SizedBox(
         width: 100,
         child: Row(
           children: [
