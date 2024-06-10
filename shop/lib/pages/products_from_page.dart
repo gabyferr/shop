@@ -40,8 +40,23 @@ class _ProductsFormPagesState extends State<ProductsFormPages> {
     setState(() {});
   }
 
+  bool isValidImageUrl(String url) {
+    bool isValidUrl = Uri.tryParse(url)?.hasAbsolutePath ?? false;
+    bool endsWithFile = url.toLowerCase().endsWith('.png') ||
+        url.toLowerCase().endsWith('.jpg') ||
+        url.toLowerCase().endsWith('.jpeg');
+    return isValidUrl && endsWithFile;
+  }
+
   void _submitForm() {
+    final isValid = _formKey.currentState?.validate() ?? false;
+
+    if (!isValid) {
+      return;
+    }
+
     _formKey.currentState?.save();
+
     final newProduct = Product(
       id: Random().nextDouble().toString(),
       name: _formData['name'] as String,
@@ -49,6 +64,7 @@ class _ProductsFormPagesState extends State<ProductsFormPages> {
       price: _formData['price'] as double,
       imageUrl: _formData['imageUrl'] as String,
     );
+
     print(newProduct.id);
     print(newProduct.name);
     print(newProduct.description);
@@ -89,6 +105,16 @@ class _ProductsFormPagesState extends State<ProductsFormPages> {
                   FocusScope.of(context).requestFocus(_priceFocus);
                 },
                 onSaved: (name) => _formData['name'] = name ?? '',
+                validator: (_name) {
+                  final name = _name ?? '';
+                  if (name.trim().isEmpty) {
+                    return 'Nome é obrigatório.';
+                  }
+                  if (name.trim().length < 3) {
+                    return 'Nome precisa no mínimo de 3 letras.';
+                  }
+                  return null;
+                },
               ),
               TextFormField(
                 decoration: const InputDecoration(labelText: 'Preço'),
@@ -96,12 +122,22 @@ class _ProductsFormPagesState extends State<ProductsFormPages> {
                 focusNode: _priceFocus,
                 keyboardType: const TextInputType.numberWithOptions(
                   decimal: true,
+                  signed: true,
                 ),
                 onFieldSubmitted: (_) {
                   FocusScope.of(context).requestFocus(_descriptionFocus);
                 },
                 onSaved: (price) =>
                     _formData['price'] = double.parse(price ?? '0'),
+                validator: (_price) {
+                  final priceString = _price ?? '';
+                  final price = double.tryParse(priceString) ?? -1;
+
+                  if (price <= 0) {
+                    return 'Informe um preço válido.';
+                  }
+                  return null;
+                },
               ),
               TextFormField(
                 decoration: const InputDecoration(labelText: 'Descrição'),
@@ -110,6 +146,17 @@ class _ProductsFormPagesState extends State<ProductsFormPages> {
                 maxLines: 3,
                 onSaved: (description) =>
                     _formData['description'] = description ?? '',
+                validator: (_description) {
+                  final description = _description ?? '';
+
+                  if (description.trim().isEmpty) {
+                    return 'Descrição é obrigatória.';
+                  }
+                  if (description.trim().length < 10) {
+                    return 'Descrição precisa no mínimo de 10 letras.';
+                  }
+                  return null;
+                },
               ),
               Row(
                 crossAxisAlignment: CrossAxisAlignment.end,
@@ -125,6 +172,14 @@ class _ProductsFormPagesState extends State<ProductsFormPages> {
                       onFieldSubmitted: (_) => _submitForm(),
                       onSaved: (imageUrl) =>
                           _formData['imageUrl'] = imageUrl ?? '',
+                      validator: (_imageUrl) {
+                        final imageUrl = _imageUrl ?? '';
+
+                        if (!isValidImageUrl(imageUrl)) {
+                          return 'Informe uma Url válida!';
+                        }
+                        return null;
+                      },
                     ),
                   ),
                   Container(
