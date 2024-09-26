@@ -25,15 +25,7 @@ class _ProductsOverviewPageState extends State<ProductsOverviewPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.blue,
-        title: const Center(
-          child: Text(
-            "Minha Loja",
-            style: TextStyle(
-              color: Colors.white,
-            ),
-          ),
-        ),
+        title: const Text('Minha Loja'),
         actions: [
           PopupMenuButton(
             icon: const Icon(Icons.more_vert),
@@ -64,7 +56,7 @@ class _ProductsOverviewPageState extends State<ProductsOverviewPage> {
               },
               icon: const Icon(Icons.shopping_cart),
             ),
-            builder: (ctx, cart, child) => BadgeComp(
+            builder: (ctx, cart, child) => Badgee(
               value: cart.itemsCount.toString(),
               child: child!,
             ),

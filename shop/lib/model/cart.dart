@@ -1,6 +1,6 @@
 import 'dart:math';
 import 'package:flutter/material.dart';
-import 'package:shop/model/cart_item_model.dart';
+import 'package:shop/model/cart_item.dart';
 import 'package:shop/model/product.dart';
 
 class Cart with ChangeNotifier {

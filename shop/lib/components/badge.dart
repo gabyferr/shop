@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 
-class BadgeComp extends StatelessWidget {
+class Badgee extends StatelessWidget {
   final Widget child;
   final String value;
   final Color? color;
 
-  const BadgeComp({
+  const Badgee({
     super.key,
     required this.child,
     required this.value,
-    this.color,
+    this.color, 
   });
 
   @override
@@ -25,7 +25,7 @@ class BadgeComp extends StatelessWidget {
             padding: const EdgeInsets.all(2),
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(10),
-              color: Colors.red,
+              color: color ?? Theme.of(context).colorScheme.secondary,
             ),
             constraints: const BoxConstraints(
               minHeight: 16,
@@ -34,7 +34,9 @@ class BadgeComp extends StatelessWidget {
             child: Text(
               value,
               textAlign: TextAlign.center,
-              style: const TextStyle(fontSize: 10, color: Colors.white),
+              style: const TextStyle(
+                fontSize: 10,
+              ),
             ),
           ),
         ),

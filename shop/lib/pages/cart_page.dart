@@ -14,20 +14,15 @@ class CartPage extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.blue,
-        title: const Center(
-          child: Text(
-            "Carrinho",
-            style: TextStyle(
-              color: Colors.white,
-            ),
-          ),
-        ),
+        title: const Text('Carrinho'),
       ),
       body: Column(
         children: [
           Card(
-            margin: const EdgeInsets.all(25),
+            margin: const EdgeInsets.symmetric(
+              horizontal: 15,
+              vertical: 25,
+            ),
             child: Padding(
               padding: const EdgeInsets.all(10),
               child: Row(
@@ -36,18 +31,12 @@ class CartPage extends StatelessWidget {
                   const Text(
                     'Total',
                     style: TextStyle(
-                      fontSize: 18,
+                      fontSize: 20,
                     ),
                   ),
                   const SizedBox(width: 10),
                   Chip(
-                    elevation: 18,
-                    backgroundColor: Colors.blue,
-                    shape: const RoundedRectangleBorder(
-                      borderRadius: BorderRadius.all(
-                        Radius.circular(20),
-                      ),
-                    ),
+                    backgroundColor: Theme.of(context).colorScheme.primary,
                     label: Text(
                       'R\$${cart.totalAmount.toStringAsFixed(2)}',
                       style: const TextStyle(
@@ -58,14 +47,15 @@ class CartPage extends StatelessWidget {
                   const Spacer(),
                   TextButton(
                     onPressed: () {
-                      Provider.of<OrderList>(context, listen: false).addOrder(cart);
+                      Provider.of<OrderList>(
+                        context,
+                        listen: false,
+                      ).addOrder(cart);
+
                       cart.clear();
                     },
-                    child: const Text(
-                      'COMPRAR',
-                      style: TextStyle(color: Colors.blue),
-                    ),
-                  )
+                    child: const Text('COMPRAR'),
+                  ),
                 ],
               ),
             ),

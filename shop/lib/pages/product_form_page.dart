@@ -1,18 +1,16 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shop/model/product.dart';
 import 'package:shop/model/product_list.dart';
 
-class ProductsFormPages extends StatefulWidget {
-  const ProductsFormPages({super.key});
+class ProductFormPage extends StatefulWidget {
+  const ProductFormPage({super.key});
 
   @override
-  State<ProductsFormPages> createState() => _ProductsFormPagesState();
+  State<ProductFormPage> createState() => _ProductFormPageState();
 }
 
-class _ProductsFormPagesState extends State<ProductsFormPages> {
+class _ProductFormPageState extends State<ProductFormPage> {
   final _priceFocus = FocusNode();
   final _descriptionFocus = FocusNode();
 
@@ -26,6 +24,26 @@ class _ProductsFormPagesState extends State<ProductsFormPages> {
   void initState() {
     super.initState();
     _imageUrlFocus.addListener(updateImage);
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+
+    if (_formData.isEmpty) {
+      final arg = ModalRoute.of(context)?.settings.arguments;
+
+      if (arg != null) {
+        final product = arg as Product;
+        _formData['id'] = product.id;
+        _formData['name'] = product.name;
+        _formData['price'] = product.price;
+        _formData['description'] = product.description;
+        _formData['imageUrl'] = product.imageUrl;
+
+        _imageUrlController.text = product.imageUrl;
+      }
+    }
   }
 
   @override
@@ -59,8 +77,11 @@ class _ProductsFormPagesState extends State<ProductsFormPages> {
 
     _formKey.currentState?.save();
 
-    Provider.of<ProductList>(context, listen: false)
-        .addProductFormData(_formData);
+    Provider.of<ProductList>(
+      context,
+      listen: false,
+    ).saveProduct(_formData);
+
     Navigator.of(context).pop();
   }
 
@@ -68,21 +89,13 @@ class _ProductsFormPagesState extends State<ProductsFormPages> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        title: const Text('Formulário de Produto'),
         actions: [
           IconButton(
             onPressed: _submitForm,
-            icon: const Icon(
-              Icons.save,
-            ),
-          ),
+            icon: const Icon(Icons.save),
+          )
         ],
-        backgroundColor: Colors.blue,
-        title: const Text(
-          'Formulário De Produto',
-          style: TextStyle(
-            color: Colors.white,
-          ),
-        ),
       ),
       body: Padding(
         padding: const EdgeInsets.all(15),
@@ -91,12 +104,14 @@ class _ProductsFormPagesState extends State<ProductsFormPages> {
           child: ListView(
             children: [
               TextFormField(
+                initialValue: _formData['name']?.toString(),
                 decoration: const InputDecoration(labelText: 'Nome'),
                 textInputAction: TextInputAction.next,
                 onFieldSubmitted: (_) {
                   FocusScope.of(context).requestFocus(_priceFocus);
                 },
                 onSaved: (name) => _formData['name'] = name ?? '',
+                // ignore: no_leading_underscores_for_local_identifiers
                 validator: (_name) {
                   final name = _name ?? '';
                   if (name.trim().isEmpty) {
@@ -109,6 +124,7 @@ class _ProductsFormPagesState extends State<ProductsFormPages> {
                 },
               ),
               TextFormField(
+                initialValue: _formData['price']?.toString(),
                 decoration: const InputDecoration(labelText: 'Preço'),
                 textInputAction: TextInputAction.next,
                 focusNode: _priceFocus,
@@ -121,6 +137,7 @@ class _ProductsFormPagesState extends State<ProductsFormPages> {
                 },
                 onSaved: (price) =>
                     _formData['price'] = double.parse(price ?? '0'),
+                // ignore: no_leading_underscores_for_local_identifiers
                 validator: (_price) {
                   final priceString = _price ?? '';
                   final price = double.tryParse(priceString) ?? -1;
@@ -128,25 +145,30 @@ class _ProductsFormPagesState extends State<ProductsFormPages> {
                   if (price <= 0) {
                     return 'Informe um preço válido.';
                   }
+
                   return null;
                 },
               ),
               TextFormField(
+                initialValue: _formData['description']?.toString(),
                 decoration: const InputDecoration(labelText: 'Descrição'),
                 focusNode: _descriptionFocus,
                 keyboardType: TextInputType.multiline,
                 maxLines: 3,
                 onSaved: (description) =>
                     _formData['description'] = description ?? '',
+                // ignore: no_leading_underscores_for_local_identifiers
                 validator: (_description) {
                   final description = _description ?? '';
 
                   if (description.trim().isEmpty) {
                     return 'Descrição é obrigatória.';
                   }
+
                   if (description.trim().length < 10) {
                     return 'Descrição precisa no mínimo de 10 letras.';
                   }
+
                   return null;
                 },
               ),
@@ -164,14 +186,16 @@ class _ProductsFormPagesState extends State<ProductsFormPages> {
                       onFieldSubmitted: (_) => _submitForm(),
                       onSaved: (imageUrl) =>
                           _formData['imageUrl'] = imageUrl ?? '',
-                      // validator: (_imageUrl) {
-                      //   final imageUrl = _imageUrl ?? '';
+                      // ignore: no_leading_underscores_for_local_identifiers
+                      validator: (_imageUrl) {
+                        final imageUrl = _imageUrl ?? '';
 
-                      //   if (!isValidImageUrl(imageUrl)) {
-                      //     return 'Informe uma Url válida!';
-                      //   }
-                      //   return null;
-                      // },
+                        if (!isValidImageUrl(imageUrl)) {
+                          return 'Informe uma Url válida!';
+                        }
+
+                        return null;
+                      },
                     ),
                   ),
                   Container(
@@ -190,9 +214,13 @@ class _ProductsFormPagesState extends State<ProductsFormPages> {
                     alignment: Alignment.center,
                     child: _imageUrlController.text.isEmpty
                         ? const Text('Informe a Url')
-                        : FittedBox(
-                            fit: BoxFit.cover,
-                            child: Image.network(_imageUrlController.text),
+                        : SizedBox(
+                            width: 100,
+                            height: 100,
+                            child: FittedBox(
+                              fit: BoxFit.cover,
+                              child: Image.network(_imageUrlController.text),
+                            ),
                           ),
                   ),
                 ],

@@ -10,18 +10,8 @@ class ProductDetailPage extends StatelessWidget {
         ModalRoute.of(context)!.settings.arguments as Product;
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.blue,
-        title:  Center(
-          child: Padding(
-            padding: const EdgeInsets.only(right: 50),
-            child: Text(
-              product.name,
-              textAlign: TextAlign.center,
-              style: const TextStyle(color: Colors.white),
-            ),
-          ),
-          ),
-        ),
+        title: Text(product.name),
+      ),
       body: SingleChildScrollView(
         child: Column(
           children: [

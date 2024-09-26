@@ -10,22 +10,15 @@ class OrdersPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final OrderList orders = Provider.of(context);
+
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.blue,
-        title: const Center(
-          child: Text(
-            'Meus pedidos',
-            style: TextStyle(
-              color: Colors.white,
-            ),
-          ),
-        ),
+        title: const Text('Meus Pedidos'),
       ),
       drawer: const AppDrawer(),
       body: ListView.builder(
         itemCount: orders.itemsCount,
-        itemBuilder: (context, i) =>  OrderWidget(order: orders.items[i],)
+        itemBuilder: (ctx, i) => OrderWidget(order: orders.items[i]),
       ),
     );
   }

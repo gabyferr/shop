@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shop/model/cart.dart';
 import 'package:shop/model/product.dart';
-
 import 'package:shop/utils/app_routes.dart';
 
 class ProductGridItem extends StatelessWidget {
@@ -25,7 +24,7 @@ class ProductGridItem extends StatelessWidget {
               },
               icon: Icon(
                   product.isFavorite ? Icons.favorite : Icons.favorite_border),
-              color: Colors.red,
+              color: Theme.of(context).colorScheme.secondary,
             ),
           ),
           title: Text(
@@ -34,7 +33,7 @@ class ProductGridItem extends StatelessWidget {
           ),
           trailing: IconButton(
             icon: const Icon(Icons.shopping_cart),
-            color: Colors.blue,
+            color: Theme.of(context).colorScheme.secondary,
             onPressed: () {
               ScaffoldMessenger.of(context).hideCurrentSnackBar();
               ScaffoldMessenger.of(context).showSnackBar(

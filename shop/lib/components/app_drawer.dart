@@ -10,34 +10,37 @@ class AppDrawer extends StatelessWidget {
       child: Column(
         children: [
           AppBar(
-            backgroundColor: Colors.blue,
-            title: const Text(
-              'Bem vindo Usuários!',
-              style: TextStyle(
-                color: Colors.white,
-              ),
-            ),
+            title: const Text('Bem vindo Usuário!'),
+            automaticallyImplyLeading: false,
           ),
           const Divider(),
           ListTile(
             leading: const Icon(Icons.shop),
             title: const Text('Loja'),
             onTap: () {
-              Navigator.of(context).pushReplacementNamed(AppRoutes.home);
+              Navigator.of(context).pushReplacementNamed(
+                AppRoutes.home,
+              );
             },
           ),
+          const Divider(),
           ListTile(
             leading: const Icon(Icons.payment),
             title: const Text('Pedidos'),
             onTap: () {
-              Navigator.of(context).pushReplacementNamed(AppRoutes.ordersPage);
+              Navigator.of(context).pushReplacementNamed(
+                AppRoutes.ordersPage,
+              );
             },
           ),
+          const Divider(),
           ListTile(
             leading: const Icon(Icons.edit),
             title: const Text('Gerenciar Produtos'),
             onTap: () {
-              Navigator.of(context).pushReplacementNamed(AppRoutes.productsPage);
+              Navigator.of(context).pushReplacementNamed(
+                AppRoutes.productsPage,
+              );
             },
           ),
         ],
